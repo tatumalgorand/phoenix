@@ -29,3 +29,10 @@ logs/
 # LangTool
 .langtool/deepl.authtoken
 
+# Smart Contracts
+smart-contracts/node_modules
+smart-contracts/.env
+smart-contracts/cache
+smart-contracts/artifacts
+smart-contracts/typechain
+smart-contracts/typechain-types

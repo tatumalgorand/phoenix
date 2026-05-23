@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Surprise!</title>
+  <style>
+    :root {
+      --bg1: #0f172a;
+      --bg2: #312e81;
+      --text: #f8fafc;
+      --accent: #22d3ee;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at 20% 20%, #1d4ed8, transparent 45%),
+                  radial-gradient(circle at 80% 80%, #9333ea, transparent 45%),
+                  linear-gradient(130deg, var(--bg1), var(--bg2));
+      overflow: hidden;
+    }
+    .card {
+      width: min(92vw, 760px);
+      text-align: center;
+      padding: 2rem;
+      border-radius: 24px;
+      backdrop-filter: blur(12px);
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
+    }
+    h1 {
+      font-size: clamp(1.7rem, 4vw, 2.8rem);
+      margin: 0 0 .4rem;
+    }
+    .subtitle {
+      margin: 0 0 1.4rem;
+      opacity: .85;
+    }
+    .message {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      margin: 1rem auto 1.4rem;
+      max-width: 34ch;
+      min-height: 3.4rem;
+    }
+    .btns {
+      display: flex;
+      justify-content: center;
+      gap: .75rem;
+      flex-wrap: wrap;
+    }
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: .75rem 1.1rem;
+      color: #0f172a;
+      background: var(--accent);
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .15s ease, filter .15s ease;
+    }
+    button:hover { transform: translateY(-1px); filter: brightness(1.05); }
+    button.secondary { background: #fbbf24; }
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(255,255,255,.85) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 30% 70%, rgba(255,255,255,.65) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 80% 25%, rgba(255,255,255,.8) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 60% 85%, rgba(255,255,255,.7) 0 1px, transparent 1.5px);
+      animation: twinkle 5s linear infinite;
+    }
+    @keyframes twinkle { from { opacity: .7 } 50% { opacity: 1 } to { opacity: .7 } }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <main class="card">
+    <h1>🎉 Surprise Website Generator</h1>
+    <p class="subtitle">Click for a random tiny delight.</p>
+    <p id="msg" class="message">Press “Surprise me” to begin.</p>
+    <div class="btns">
+      <button id="surprise">Surprise me</button>
+      <button id="party" class="secondary">Party mode</button>
+    </div>
+  </main>
+
+  <script>
+    const messages = [
+      "✨ Today is a perfect day to build something weird and wonderful.",
+      "🪄 Your next idea will arrive when you least expect it.",
+      "🚀 You just unlocked +10 creative points.",
+      "🌈 Plot twist: this random page believes in you.",
+      "🧠 Fun fact: surprises are great for motivation.",
+      "🎯 Tiny steps still count as legendary progress."
+    ];
+
+    const palette = [
+      ["#0f172a", "#312e81", "#22d3ee"],
+      ["#1f2937", "#4c1d95", "#f472b6"],
+      ["#052e16", "#134e4a", "#34d399"],
+      ["#3f1d2e", "#6b21a8", "#fb7185"]
+    ];
+
+    const msgEl = document.getElementById("msg");
+    const surpriseBtn = document.getElementById("surprise");
+    const partyBtn = document.getElementById("party");
+
+    function randomItem(list) {
+      return list[Math.floor(Math.random() * list.length)];
+    }
+
+    function applyRandomTheme() {
+      const [bg1, bg2, accent] = randomItem(palette);
+      document.documentElement.style.setProperty("--bg1", bg1);
+      document.documentElement.style.setProperty("--bg2", bg2);
+      document.documentElement.style.setProperty("--accent", accent);
+    }
+
+    surpriseBtn.addEventListener("click", () => {
+      msgEl.textContent = randomItem(messages);
+      applyRandomTheme();
+    });
+
+    partyBtn.addEventListener("click", () => {
+      let spins = 0;
+      const timer = setInterval(() => {
+        msgEl.textContent = randomItem(messages);
+        applyRandomTheme();
+        spins += 1;
+        if (spins > 8) clearInterval(timer);
+      }, 180);
+    });
+  </script>
+</body>
+</html>
